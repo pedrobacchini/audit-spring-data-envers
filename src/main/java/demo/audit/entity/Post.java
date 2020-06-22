@@ -1,56 +1,49 @@
 package demo.audit.entity;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import org.springframework.data.history.RevisionMetadata;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Audited
 public class Post {
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name = "post_ID")
 	private Integer postID;
-	
+
 	@Column(name = "post_Title")
 	private String postTitle;
-	
+
 	@Column(name = "post_Content")
 	private String postContent;
-	
+
+	@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 	@ManyToOne
     @JoinColumn(name="user_ID", nullable=false)
 	private User postBy;
-	
+
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name = "post_ID")
 	@NotAudited
 	private List<Comment> comments;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "category_ID", nullable = false)
-	@NotAudited
+	@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 	private Category category;
-	
+
 	@OneToMany(mappedBy="post", cascade=CascadeType.ALL)
 	private List<Image> images;
-	
+
 	@Transient
 	private RevisionMetadata<Integer> editVersion;
-	
+
 	/**
 	 * @return the postTitle
 	 */
@@ -123,7 +116,7 @@ public class Post {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-				
+
 	/**
 	 * @return the editVersion
 	 */
@@ -136,7 +129,7 @@ public class Post {
 	public void setEditVersion(RevisionMetadata<Integer> editVersion) {
 		this.editVersion = editVersion;
 	}
-		
+
 	/**
 	 * @return the images
 	 */
@@ -157,5 +150,4 @@ public class Post {
 		return "Post [postID=" + postID + ", postTitle=" + postTitle + ", postContent=" + postContent + ", postBy="
 				+ postBy + ", comments=" + comments + ", category=" + category + "]";
 	}
-		
 }

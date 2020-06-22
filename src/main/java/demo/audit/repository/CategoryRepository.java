@@ -1,5 +1,6 @@
-package demo.audit.entity;
+package demo.audit.repository;
 
+import demo.audit.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

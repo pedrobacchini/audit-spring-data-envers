@@ -48,10 +48,18 @@ public class BlogController {
 	public Post updatePost(@PathVariable Integer postID, @RequestBody Post post){
 		return blogService.editPost(postID, post);
 	}
-	
+
+	@GetMapping( path="/post/{postID}")
+	public Post findById(@PathVariable Integer postID) { return blogService.findById(postID); }
+
 	@GetMapping( path="/post/{postID}/history")
 	public List<Post> getPostEditHistory(@PathVariable Integer postID){
 		return blogService.getPostEditHistory(postID);
+	}
+
+	@GetMapping( path="/post/{postID}/version/{versionNumber}")
+	public Post getPostVersion(@PathVariable Integer postID, @PathVariable Integer versionNumber){
+		return blogService.getPostVersion(postID, versionNumber);
 	}
 	
 	@PostMapping( path="/post/{postID}/comment")

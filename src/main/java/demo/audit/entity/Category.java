@@ -3,11 +3,7 @@ package demo.audit.entity;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,7 +21,7 @@ public class Category implements Serializable{
 	@OneToMany(mappedBy="category")
 	@JsonIgnore
 	private List<Post> posts;
-	
+
 	/**
 	 * @return the categoryID
 	 */
@@ -50,6 +46,6 @@ public class Category implements Serializable{
 	public void setCategory(String Category) {
 		this.category = Category;
 	}
-	
-	
+
+
 }

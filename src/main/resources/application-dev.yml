@@ -1,0 +1,21 @@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      org.hibernate.envers.audit_table_suffix: _HISTORY
+      org.hibernate.envers.revision_on_collection_change: false
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:33066/blog_db?createDatabaseIfNotExist=true
+    username: root
+    password: admin
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: TRACE
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
